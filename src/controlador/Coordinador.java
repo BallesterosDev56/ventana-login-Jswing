@@ -8,6 +8,8 @@ import vista.VentanaLogin;
 import vista.VentanaPrincipal;
 import vista.VentanaRegistro;
 
+import java.util.ArrayList;
+
 public class Coordinador {
 
 	private VentanaPrincipal miVentana;
@@ -29,7 +31,7 @@ public class Coordinador {
 		this.miLogica=miLogica;
 	}
 
-	public String validarIngreso(int index, String doc, String pass) {
+	public ArrayList validarIngreso(int index, String doc, String pass) {
 		return miLogica.validarIngreso(index, doc, pass);
 	}
 
@@ -37,7 +39,7 @@ public class Coordinador {
 		miLogin.dispose();
 	}
 
-	public void asignarPrivilegios(String usuario) {
+	public void asignarPrivilegios(ArrayList<String> usuario) {
 		miVentana.asignarPrivilegios(usuario);
 	}
 
@@ -58,8 +60,9 @@ public class Coordinador {
 		miVentanaRegistro.setVisible(true);
 	}
 
-	public void mostrarVentanaConsulta(int tipoUsuario) {
+	public void mostrarVentanaConsulta(int tipoUsuario, String documentoUsuario) {
 		miVentanaConsultaIndividual.verifyTipo(tipoUsuario);
+		miVentanaConsultaIndividual.setUsuarioDocumento(documentoUsuario);
 		miVentanaConsultaIndividual.setVisible(true);
 	}
 
@@ -83,6 +86,11 @@ public class Coordinador {
 	public UsuarioVo consultarUsuario(String doc, String pass) {
 		
 		return miUsuarioDao.consultarUsuario(doc);
+	}
+
+	public UsuarioVo consultarMismoUsuario(String labelDoc, String usuarioDocumento) {
+
+		return miUsuarioDao.consultarMismoUsuario(labelDoc, usuarioDocumento);
 	}
 
 	public String actualizaUsuario(UsuarioVo miUsuarioVo) {

@@ -15,6 +15,8 @@ public class VentanaConsultaIndividual extends JDialog implements ActionListener
     private javax.swing.JPanel panelConsulta;
     private javax.swing.JSeparator separadorInferior, separadorSuperior;
     private Coordinador miCoordinador;
+    private  int tipoUsuario;
+    private String usuarioDocumento;
 
     public VentanaConsultaIndividual(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -206,7 +208,10 @@ public class VentanaConsultaIndividual extends JDialog implements ActionListener
     }
 
     private void consultarUsuario() {
-        UsuarioVo usuarioVO = miCoordinador.consultarUsuario(campoConsultaDocumento.getText().trim(), null);
+        UsuarioVo usuarioVO;
+
+        usuarioVO = miCoordinador.consultarUsuario(campoConsultaDocumento.getText().trim(), null);
+
         if (usuarioVO.getDocumento() != null) {
             campoNombre.setText(usuarioVO.getNombre());
             campoDocumento.setText(usuarioVO.getDocumento());
@@ -268,7 +273,12 @@ public class VentanaConsultaIndividual extends JDialog implements ActionListener
         limpiarVentana();
     }
 
+    public void setUsuarioDocumento(String documento) {
+        this.usuarioDocumento = documento;
+    }
+
     public void verifyTipo(int tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
         if (tipoUsuario == 3) {
             btonActualizar.setVisible(false);
             btonEliminar.setVisible(false);

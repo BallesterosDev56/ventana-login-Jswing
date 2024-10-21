@@ -7,6 +7,7 @@ import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -22,7 +23,8 @@ import controlador.Coordinador;
  */
 
 public class VentanaPrincipal extends JFrame implements ActionListener {
-      int tipoUsuario = 0;
+      private int tipoUsuario = 0;
+      private String usuarioDocumento;
 
 	  private javax.swing.JButton botonConsultar;
 	  private javax.swing.JButton botonRegistrar;
@@ -133,17 +135,21 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 		this.miCoordinador=miCoordinador;
 	}
 
-	public void asignarPrivilegios(String usuario) {
-		labelTitulo.setText("Bienvenido : "+usuario);
+	public void asignarPrivilegios(ArrayList<String> usuario) {
+        this.usuarioDocumento = usuario.getLast();
+		labelTitulo.setText("Bienvenido : "+usuario.getFirst());
+
 		
-		if (usuario.equals("Administrador")) {
+		if (usuario.getFirst().equals("Administrador")) {
+            this.tipoUsuario = 1;
 			botonConsultar.setVisible(true);
 			botonRegistrar.setVisible(true);
-		}else if(usuario.equals("Usuario")) {
+		}else if(usuario.getFirst().equals("Usuario")) {
+            this.tipoUsuario = 2;
 			botonConsultar.setVisible(false);
 			botonRegistrar.setVisible(true);
-		} else if (usuario.equals("Secretaria")) {
-            tipoUsuario = 3;
+		} else if (usuario.getFirst().equals("Secretaria")) {
+            this.tipoUsuario = 3;
             botonConsultar.setVisible(true);
             botonRegistrar.setVisible(true);
         }
@@ -161,7 +167,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 		}
 		
 		if (e.getSource()==botonConsultar) {
-			miCoordinador.mostrarVentanaConsulta(tipoUsuario);
+			miCoordinador.mostrarVentanaConsulta(tipoUsuario, usuarioDocumento);
 		}
 		
 	}

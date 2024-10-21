@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 
 import javax.swing.JOptionPane;
 
@@ -59,6 +60,13 @@ public class UsuarioDao {
 		return resultado;
 	}
 
+	public boolean verifyMismoUsuario(String labelDocumento, String usuarioDocumento) {
+		if(!Objects.equals(labelDocumento, usuarioDocumento)) {
+			return false;
+		}
+		return true;
+	}
+
 	public UsuarioVo consultarUsuario(String doc) {
 		Connection connection=null;
 		Conexion miConexion=new Conexion();
@@ -103,6 +111,58 @@ public class UsuarioDao {
 			System.out.println("Error en la consulta del usuario: "+e.getMessage());
 		}
 		
+		return miUsuario;
+	}
+
+	public UsuarioVo actualizarMismoUsuario(String labelDocumento, String usuarioDocumento) {
+
+		if(!verifyMismoUsuario(labelDocumento, usuarioDocumento)){
+			return null;
+		}
+
+		Connection connection=null;
+		Conexion miConexion=new Conexion();
+		PreparedStatement statement=null;
+		ResultSet result=null;
+
+		UsuarioVo miUsuario=new UsuarioVo();
+
+		connection=miConexion.getConnection();
+
+		String consulta="";
+		consulta="SELECT * FROM usuario where documento = ?";
+
+		ArrayList<UsuarioVo> listUser=new ArrayList<UsuarioVo>();
+		try {
+			if (connection!=null) {
+				statement=connection.prepareStatement(consulta);
+				statement.setString(1, labelDocumento);
+
+				result=statement.executeQuery();
+
+				while(result.next()){
+					miUsuario=new UsuarioVo();
+					miUsuario.setDocumento(result.getString("documento"));
+					miUsuario.setNombre(result.getString("nombre"));
+					miUsuario.setProfesion(result.getString("profesion"));
+					miUsuario.setEdad(result.getInt("edad"));
+					miUsuario.setDireccion(result.getString("direccion"));
+					miUsuario.setTelefono(result.getString("telefono"));
+					miUsuario.setTipo(result.getInt("tipo"));
+					miUsuario.setPassword(result.getString("password"));
+
+					listUser.add(miUsuario);
+				}
+				miConexion.desconectar();
+			}else{
+				miUsuario=null;
+			}
+
+
+		} catch (SQLException e) {
+			System.out.println("Error en la consulta del usuario: "+e.getMessage());
+		}
+
 		return miUsuario;
 	}
 

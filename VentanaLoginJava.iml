@@ -10,7 +10,7 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../VentanaLogin/src/conector/mysql-connector-java-5.0.8-bin.jar!/" />
+          <root url="jar://$MODULE_DIR$/../conector-j/mysql-connector-j-9.0.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

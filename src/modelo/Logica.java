@@ -5,6 +5,8 @@ import javax.swing.JOptionPane;
 import modelo.vo.UsuarioVo;
 import controlador.Coordinador;
 
+import java.util.ArrayList;
+
 public class Logica {
 	
 	final int SELECCION=0;
@@ -22,22 +24,21 @@ public class Logica {
 			this.miCoordinador=miCoordinador;
 		}
 		
-		public String validarIngreso(int index, String doc, String pass){
-			
-			String retorno="";
-			
+		public ArrayList validarIngreso(int index, String doc, String pass){
+			ArrayList<String> retorno = new ArrayList<>();
+
 			if (index==SELECCION) {//seleccion es 1
-				retorno="error";
+				retorno.add("error");
 			}else{
-				retorno=validarPass(index, doc, pass);
+				retorno = validarPass(index, doc, pass);
 			}
 				
 			return retorno;
 		}
 
-		private String validarPass(int index, String doc, String pass) {
+		private ArrayList<String> validarPass(int index, String doc, String pass) {
 			UsuarioVo miUsuarioVo=miCoordinador.consultarUsuario(doc, null);
-			String retorno="";
+			ArrayList<String> retorno = new ArrayList<>();
 
 			if (miUsuarioVo!=null) {
 				if ( (index==ADMINISTRADOR && index==miUsuarioVo.getTipo() )|| (index==USUARIO && index==miUsuarioVo.getTipo() ) || (index==SECRETARIA && index==miUsuarioVo.getTipo() ) ) {
@@ -45,22 +46,25 @@ public class Logica {
 						int tipo=miUsuarioVo.getTipo();
 						switch (tipo) {
 							case 1:
-								retorno = "Administrador";
+								retorno.add("Administrador");
+								retorno.add(miUsuarioVo.getDocumento());
 								break;
 							case 2:
-								retorno = "Usuario";
+								retorno.add("Usuario");
+								retorno.add(miUsuarioVo.getDocumento());
 								break;
 							case 3:
-								retorno = "Secretaria";
+								retorno.add("Secretaria");
+								retorno.add(miUsuarioVo.getDocumento());
 						}
 					}else{
-						retorno="invalido";
+						retorno.add("invalido");
 					}
 				}else{
-					retorno="invalido";
+					retorno.add("invalido");
 				}
 			}else{
-				retorno="desconectado";
+				retorno.add("desconectado");
 			}
 			   return retorno;
 		}
