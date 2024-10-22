@@ -139,19 +139,15 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
         this.usuarioDocumento = usuario.getLast();
 		labelTitulo.setText("Bienvenido : "+usuario.getFirst());
 
-		
+        botonConsultar.setVisible(true);
+        botonRegistrar.setVisible(true);
 		if (usuario.getFirst().equals("Administrador")) {
             this.tipoUsuario = 1;
-			botonConsultar.setVisible(true);
-			botonRegistrar.setVisible(true);
 		}else if(usuario.getFirst().equals("Usuario")) {
             this.tipoUsuario = 2;
-			botonConsultar.setVisible(false);
-			botonRegistrar.setVisible(true);
 		} else if (usuario.getFirst().equals("Secretaria")) {
             this.tipoUsuario = 3;
-            botonConsultar.setVisible(true);
-            botonRegistrar.setVisible(true);
+
         }
 		
 	}

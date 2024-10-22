@@ -61,7 +61,7 @@ public class Coordinador {
 	}
 
 	public void mostrarVentanaConsulta(int tipoUsuario, String documentoUsuario) {
-		miVentanaConsultaIndividual.verifyTipo(tipoUsuario);
+		miVentanaConsultaIndividual.setUsuarioTipo(tipoUsuario);
 		miVentanaConsultaIndividual.setUsuarioDocumento(documentoUsuario);
 		miVentanaConsultaIndividual.setVisible(true);
 	}
@@ -88,10 +88,6 @@ public class Coordinador {
 		return miUsuarioDao.consultarUsuario(doc);
 	}
 
-	public UsuarioVo consultarMismoUsuario(String labelDoc, String usuarioDocumento) {
-
-		return miUsuarioDao.consultarMismoUsuario(labelDoc, usuarioDocumento);
-	}
 
 	public String actualizaUsuario(UsuarioVo miUsuarioVo) {
 		return miUsuarioDao.actualizaUsuario(miUsuarioVo);

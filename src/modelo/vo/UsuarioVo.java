@@ -10,6 +10,7 @@ public class UsuarioVo {
 	private String telefono;
 	private int tipo;
 	private String password;
+	private int estado;
 
 	public String getNombre() {
 		return nombre;
@@ -59,6 +60,9 @@ public class UsuarioVo {
 	public String getPassword() {
 		return this.password;
 	}
+	public int getEstado() {return estado;}
+	public void setEstado(int estado) {this.estado = estado;}
+
 	@Override
 	public String toString() {
 		return

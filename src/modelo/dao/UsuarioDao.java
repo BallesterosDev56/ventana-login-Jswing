@@ -32,8 +32,8 @@ public class UsuarioDao {
 		PreparedStatement preStatement=null;
 		
 		connection=conexion.getConnection();
-		String consulta="INSERT INTO usuario (documento, nombre, profesion, edad, direccion, telefono, tipo, password)" +
-				" VALUES (?,?,?,?,?,?,?,?)";
+		String consulta="INSERT INTO usuario (documento, nombre, profesion, edad, direccion, telefono, tipo, password, estado)" +
+				" VALUES (?,?,?,?,?,?,?,?,?)";
 		
 		try {
 			preStatement = connection.prepareStatement(consulta);
@@ -45,6 +45,7 @@ public class UsuarioDao {
 			preStatement.setString(6, miUsuarioVo.getTelefono());
 			preStatement.setInt(7, miUsuarioVo.getTipo());
 			preStatement.setString(8, miUsuarioVo.getPassword());
+			preStatement.setInt(9, 1);
 			preStatement.execute();
 			
 			resultado="ok";
@@ -203,7 +204,7 @@ public class UsuarioDao {
 		
 		String resp="";
 		try {
-			String sentencia="UPDATE usuario SET tipo = 0 WHERE documento= ? ";
+			String sentencia="UPDATE usuario SET estado = 0 WHERE documento= ? ";
 
 			PreparedStatement statement = connection.prepareStatement(sentencia);
 			statement.setString(1, documento);

@@ -2,6 +2,7 @@ package vista;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Objects;
 import javax.swing.*;
 
 import modelo.vo.UsuarioVo;
@@ -15,7 +16,7 @@ public class VentanaConsultaIndividual extends JDialog implements ActionListener
     private javax.swing.JPanel panelConsulta;
     private javax.swing.JSeparator separadorInferior, separadorSuperior;
     private Coordinador miCoordinador;
-    private  int tipoUsuario;
+    private  int usuarioTipo;
     private String usuarioDocumento;
 
     public VentanaConsultaIndividual(java.awt.Frame parent, boolean modal) {
@@ -240,6 +241,8 @@ public class VentanaConsultaIndividual extends JDialog implements ActionListener
 
 
     private void actualizaUsuario() {
+        String res = "";
+
         int tipoUsuario = 0;
         switch (comboTipoUsuario.getSelectedItem().toString()) {
             case "Admin":
@@ -262,14 +265,44 @@ public class VentanaConsultaIndividual extends JDialog implements ActionListener
         usuario.setEdad(Integer.parseInt(campoEdad.getText()));
         usuario.setTipo(tipoUsuario);
 
-        String res = miCoordinador.actualizaUsuario(usuario);
-        JOptionPane.showMessageDialog(null, res, "Actualizar Usuario", JOptionPane.INFORMATION_MESSAGE);
+        if(usuarioTipo == 2 || usuarioTipo == 3) {
+
+            if (verifySameDocument(campoDocumento.getText(), usuarioDocumento)) {
+                res = miCoordinador.actualizaUsuario(usuario);
+            } else {
+                JOptionPane.showMessageDialog(null, "Solo puedes moficar tu propio perfil", "Error de permisos", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+        } else {
+            res = miCoordinador.actualizaUsuario(usuario);
+        }
+
+        if (Objects.equals(res, "ok")) {
+            JOptionPane.showMessageDialog(null, "Actualización realizada", "Usuario actualizado!!", JOptionPane.INFORMATION_MESSAGE);
+        }
+
     }
 
+    private boolean verifySameDocument(String labelDoc, String userDoc) {return Objects.equals(labelDoc, userDoc);}
+
     private void eliminaUsuario() {
+        String res = "";
         String documento = campoDocumento.getText();
-        String res = miCoordinador.eliminarUsuario(documento);
-        JOptionPane.showMessageDialog(null, res, "Eliminar Usuario", JOptionPane.INFORMATION_MESSAGE);
+
+        if(usuarioTipo == 2 || usuarioTipo == 3) {
+
+            if (verifySameDocument(campoDocumento.getText(), usuarioDocumento)) {
+                res = miCoordinador.eliminarUsuario(documento);
+            } else {
+                JOptionPane.showMessageDialog(null, "Solo puedes eliminar tu propio perfil", "Error de permisos", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+        } else {
+            res = miCoordinador.eliminarUsuario(documento);
+        }
+        if ((!Objects.equals(res, "error"))) {
+            JOptionPane.showMessageDialog(null, "Eliminación realizada", "Usuario eliminado!!", JOptionPane.INFORMATION_MESSAGE);
+        }
         limpiarVentana();
     }
 
@@ -277,11 +310,7 @@ public class VentanaConsultaIndividual extends JDialog implements ActionListener
         this.usuarioDocumento = documento;
     }
 
-    public void verifyTipo(int tipoUsuario) {
-        this.tipoUsuario = tipoUsuario;
-        if (tipoUsuario == 3) {
-            btonActualizar.setVisible(false);
-            btonEliminar.setVisible(false);
-        }
+    public void setUsuarioTipo(int usuarioTipo) {
+        this.usuarioTipo = usuarioTipo;
     }
 }
