@@ -3,10 +3,7 @@ package controlador;
 import modelo.Logica;
 import modelo.dao.UsuarioDao;
 import modelo.vo.UsuarioVo;
-import vista.VentanaConsultaIndividual;
-import vista.VentanaLogin;
-import vista.VentanaPrincipal;
-import vista.VentanaRegistro;
+import vista.*;
 
 import java.util.ArrayList;
 
@@ -16,6 +13,7 @@ public class Coordinador {
 	private VentanaLogin miLogin;
 	private Logica miLogica;
 	private VentanaRegistro miVentanaRegistro;
+	private VentanaTabla miVentanaTabla;
 	private VentanaConsultaIndividual miVentanaConsultaIndividual;
 	private UsuarioDao miUsuarioDao;
 
@@ -52,6 +50,10 @@ public class Coordinador {
 		this.miVentanaRegistro=miVentanaRegistro;
 	}
 
+	public void setVentanaTabla(VentanaTabla miVentanaTabla) {
+		this.miVentanaTabla=miVentanaTabla;
+	}
+
 	public void setVentanaConsultaIndividual(	VentanaConsultaIndividual miVentanaConsultaIndividual) {
 		this.miVentanaConsultaIndividual=miVentanaConsultaIndividual;
 	}
@@ -60,10 +62,18 @@ public class Coordinador {
 		miVentanaRegistro.setVisible(true);
 	}
 
-	public void mostrarVentanaConsulta(int tipoUsuario, String documentoUsuario) {
-		miVentanaConsultaIndividual.setUsuarioTipo(tipoUsuario);
-		miVentanaConsultaIndividual.setUsuarioDocumento(documentoUsuario);
+	public void mostrarVentanaConsulta() {
 		miVentanaConsultaIndividual.setVisible(true);
+	}
+
+	public void setUsuarioDocumento(String usuarioDocumento) {
+		miVentanaConsultaIndividual.setUsuarioDocumento(usuarioDocumento);
+		miVentanaTabla.setUsuarioDocumento(usuarioDocumento);
+	}
+
+	public void setUsuarioTipo(int usuarioTipo) {
+		miVentanaConsultaIndividual.setUsuarioTipo(usuarioTipo);
+		miVentanaTabla.setUsuarioTipo(usuarioTipo);
 	}
 
 	public void setUsuarioDao(UsuarioDao miUsuarioDao) {
@@ -88,11 +98,20 @@ public class Coordinador {
 		return miUsuarioDao.consultarUsuario(doc);
 	}
 
+	public ArrayList<UsuarioVo> consultarUsuariosActivos() {
+
+		return miUsuarioDao.consultarUsuariosActivos();
+	}
+
+	public ArrayList<UsuarioVo> consultarUsuariosInactivos() {
+
+		return miUsuarioDao.consultarUsuariosInactivos();
+	}
+
 	public UsuarioVo consultarUsuarioAll(String doc, String pass) {
 
 		return miUsuarioDao.consultarUsuarioAll(doc);
 	}
-
 
 	public String actualizaUsuario(UsuarioVo miUsuarioVo) {
 		return miUsuarioDao.actualizaUsuario(miUsuarioVo);
@@ -101,5 +120,9 @@ public class Coordinador {
 	public String eliminarUsuario(String documento) {
 		return miUsuarioDao.eliminarUsuario(documento);
 	}
-	
+
+	public void mostrarVentanaTabla() {
+		miVentanaTabla.setPermissions();
+		miVentanaTabla.setVisible(true);
+	}
 }

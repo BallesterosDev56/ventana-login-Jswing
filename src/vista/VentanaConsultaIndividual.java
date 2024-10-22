@@ -70,7 +70,7 @@ public class VentanaConsultaIndividual extends JDialog implements ActionListener
 
         TituloConsulta.setFont(new java.awt.Font("Tempus Sans ITC", 1, 36));
         TituloConsulta.setHorizontalAlignment(SwingConstants.CENTER);
-        TituloConsulta.setText("Consultar Usuario");
+        TituloConsulta.setText("Consulta Usuario Individual");
         TituloConsulta.setBorder(BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         panelConsulta.add(TituloConsulta);
         TituloConsulta.setBounds(20, 10, 660, 60);

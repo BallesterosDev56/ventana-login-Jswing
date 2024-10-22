@@ -115,7 +115,7 @@ public class UsuarioDao {
 		return miUsuario;
 	}
 
-		public UsuarioVo consultarUsuarioAll(String doc) {
+	public UsuarioVo consultarUsuarioAll(String doc) {
 		Connection connection=null;
 		Conexion miConexion=new Conexion();
 		PreparedStatement statement=null;
@@ -162,34 +162,25 @@ public class UsuarioDao {
 		return miUsuario;
 	}
 
-	public UsuarioVo actualizarMismoUsuario(String labelDocumento, String usuarioDocumento) {
+	public ArrayList<UsuarioVo> consultarUsuariosActivos() {
+		Connection connection = null;
+		Conexion miConexion = new Conexion();
+		PreparedStatement statement = null;
+		ResultSet result = null;
 
-		if(!verifyMismoUsuario(labelDocumento, usuarioDocumento)){
-			return null;
-		}
+		ArrayList<UsuarioVo> listUser = new ArrayList<>();
 
-		Connection connection=null;
-		Conexion miConexion=new Conexion();
-		PreparedStatement statement=null;
-		ResultSet result=null;
+		connection = miConexion.getConnection();
 
-		UsuarioVo miUsuario=new UsuarioVo();
+		String consulta = "SELECT * FROM usuario where estado = 1";
 
-		connection=miConexion.getConnection();
-
-		String consulta="";
-		consulta="SELECT * FROM usuario where documento = ?";
-
-		ArrayList<UsuarioVo> listUser=new ArrayList<UsuarioVo>();
 		try {
-			if (connection!=null) {
-				statement=connection.prepareStatement(consulta);
-				statement.setString(1, labelDocumento);
+			if (connection != null) {
+				statement = connection.prepareStatement(consulta);
+				result = statement.executeQuery();
 
-				result=statement.executeQuery();
-
-				while(result.next()){
-					miUsuario=new UsuarioVo();
+				while (result.next()) {
+					UsuarioVo miUsuario = new UsuarioVo();
 					miUsuario.setDocumento(result.getString("documento"));
 					miUsuario.setNombre(result.getString("nombre"));
 					miUsuario.setProfesion(result.getString("profesion"));
@@ -202,17 +193,53 @@ public class UsuarioDao {
 					listUser.add(miUsuario);
 				}
 				miConexion.desconectar();
-			}else{
-				miUsuario=null;
 			}
-
-
 		} catch (SQLException e) {
-			System.out.println("Error en la consulta del usuario: "+e.getMessage());
+			System.out.println("Error en la consulta de usuarios: " + e.getMessage());
 		}
 
-		return miUsuario;
+		return listUser;
 	}
+
+	public ArrayList<UsuarioVo> consultarUsuariosInactivos() {
+		Connection connection = null;
+		Conexion miConexion = new Conexion();
+		PreparedStatement statement = null;
+		ResultSet result = null;
+
+		ArrayList<UsuarioVo> listUser = new ArrayList<>();
+
+		connection = miConexion.getConnection();
+
+		String consulta = "SELECT * FROM usuario where estado = 0";
+
+		try {
+			if (connection != null) {
+				statement = connection.prepareStatement(consulta);
+				result = statement.executeQuery();
+
+				while (result.next()) {
+					UsuarioVo miUsuario = new UsuarioVo();
+					miUsuario.setDocumento(result.getString("documento"));
+					miUsuario.setNombre(result.getString("nombre"));
+					miUsuario.setProfesion(result.getString("profesion"));
+					miUsuario.setEdad(result.getInt("edad"));
+					miUsuario.setDireccion(result.getString("direccion"));
+					miUsuario.setTelefono(result.getString("telefono"));
+					miUsuario.setTipo(result.getInt("tipo"));
+					miUsuario.setPassword(result.getString("password"));
+
+					listUser.add(miUsuario);
+				}
+				miConexion.desconectar();
+			}
+		} catch (SQLException e) {
+			System.out.println("Error en la consulta de usuarios: " + e.getMessage());
+		}
+
+		return listUser;
+	}
+
 
 	public String actualizaUsuario(UsuarioVo miUsuarioVo) {
 		String resultado="";
@@ -268,7 +295,5 @@ public class UsuarioDao {
 		}
 		return resp;
 	}
-	
-		
 
 }

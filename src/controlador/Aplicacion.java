@@ -2,10 +2,7 @@ package controlador;
 
 import modelo.Logica;
 import modelo.dao.UsuarioDao;
-import vista.VentanaConsultaIndividual;
-import vista.VentanaLogin;
-import vista.VentanaPrincipal;
-import vista.VentanaRegistro;
+import vista.*;
 
 public class Aplicacion {
 	
@@ -14,6 +11,7 @@ public class Aplicacion {
 		//Instanciamos las clases unicas
 		VentanaPrincipal miVentana=new VentanaPrincipal();
 		VentanaLogin miLogin=new VentanaLogin(miVentana, true);
+		VentanaTabla miVentanaTabla = new VentanaTabla(miVentana, true);
 		Coordinador miCoordinador=new Coordinador();
 		Logica miLogica=new Logica();
 		VentanaRegistro miVentanaRegistro=new VentanaRegistro(miVentana, true);
@@ -27,7 +25,9 @@ public class Aplicacion {
 		miLogica.setCoordinador(miCoordinador);
 		miVentanaRegistro.setCoordinador(miCoordinador);
 		miVentanaConsultaIndividual.setCoordinador(miCoordinador);
+		miVentanaTabla.setCoordinador(miCoordinador);
 		miUsuarioDao.setCoordinador(miCoordinador);
+
 		
 		//Relacionamos el Coordinador con las Clases
 		miCoordinador.setVentanaPrincipal(miVentana);
@@ -36,9 +36,8 @@ public class Aplicacion {
 		miCoordinador.setVentanaRegistro(miVentanaRegistro);
 		miCoordinador.setVentanaConsultaIndividual(miVentanaConsultaIndividual);
 		miCoordinador.setUsuarioDao(miUsuarioDao);
-		
-		
-	
+		miCoordinador.setVentanaTabla(miVentanaTabla);
+
 		
 		miVentana.setVisible(true);
 		miLogin.setVisible(true);
