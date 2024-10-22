@@ -88,6 +88,11 @@ public class Coordinador {
 		return miUsuarioDao.consultarUsuario(doc);
 	}
 
+	public UsuarioVo consultarUsuarioAll(String doc, String pass) {
+
+		return miUsuarioDao.consultarUsuarioAll(doc);
+	}
+
 
 	public String actualizaUsuario(UsuarioVo miUsuarioVo) {
 		return miUsuarioDao.actualizaUsuario(miUsuarioVo);

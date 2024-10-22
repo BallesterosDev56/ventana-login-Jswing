@@ -79,7 +79,7 @@ public class UsuarioDao {
 		connection=miConexion.getConnection();
 
 		String consulta="";
-		consulta="SELECT * FROM usuario where documento = ?";
+		consulta="SELECT * FROM usuario where documento = ? and estado = 1";
 
 		ArrayList<UsuarioVo> listUser=new ArrayList<UsuarioVo>();
 		try {
@@ -112,6 +112,53 @@ public class UsuarioDao {
 			System.out.println("Error en la consulta del usuario: "+e.getMessage());
 		}
 		
+		return miUsuario;
+	}
+
+		public UsuarioVo consultarUsuarioAll(String doc) {
+		Connection connection=null;
+		Conexion miConexion=new Conexion();
+		PreparedStatement statement=null;
+		ResultSet result=null;
+
+		UsuarioVo miUsuario=new UsuarioVo();
+
+		connection=miConexion.getConnection();
+
+		String consulta="";
+		consulta="SELECT * FROM usuario where documento = ?";
+
+		ArrayList<UsuarioVo> listUser=new ArrayList<UsuarioVo>();
+		try {
+			if (connection!=null) {
+				statement=connection.prepareStatement(consulta);
+				statement.setString(1, doc);
+
+				result=statement.executeQuery();
+
+				while(result.next()){
+					miUsuario=new UsuarioVo();
+					miUsuario.setDocumento(result.getString("documento"));
+					miUsuario.setNombre(result.getString("nombre"));
+					miUsuario.setProfesion(result.getString("profesion"));
+					miUsuario.setEdad(result.getInt("edad"));
+					miUsuario.setDireccion(result.getString("direccion"));
+					miUsuario.setTelefono(result.getString("telefono"));
+					miUsuario.setTipo(result.getInt("tipo"));
+					miUsuario.setPassword(result.getString("password"));
+
+					listUser.add(miUsuario);
+				}
+				   miConexion.desconectar();
+			}else{
+				miUsuario=null;
+			}
+
+
+		} catch (SQLException e) {
+			System.out.println("Error en la consulta del usuario: "+e.getMessage());
+		}
+
 		return miUsuario;
 	}
 

@@ -211,7 +211,11 @@ public class VentanaConsultaIndividual extends JDialog implements ActionListener
     private void consultarUsuario() {
         UsuarioVo usuarioVO;
 
-        usuarioVO = miCoordinador.consultarUsuario(campoConsultaDocumento.getText().trim(), null);
+        if(usuarioTipo == 1) {
+            usuarioVO = miCoordinador.consultarUsuarioAll(campoConsultaDocumento.getText().trim(), null);
+        } else {
+            usuarioVO = miCoordinador.consultarUsuario(campoConsultaDocumento.getText().trim(), null);
+        }
 
         if (usuarioVO.getDocumento() != null) {
             campoNombre.setText(usuarioVO.getNombre());
