@@ -3,10 +3,8 @@ package vista;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
-
 import modelo.vo.UsuarioVo;
 import controlador.Coordinador;
-
 /**
  *
  * @author User
@@ -28,7 +26,6 @@ public class VentanaRegistro extends JDialog  implements ActionListener{
 
     private void initComponents() {
 
-        // Inicializa el JComboBox con las opciones "Admin", "Usuario", "Secretaria"
         campoTipo = new javax.swing.JComboBox<>(new String[]{"Admin", "Usuario", "Secretaria"});
         javax.swing.JLabel labelTipo = new javax.swing.JLabel("Tipo:");
 

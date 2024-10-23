@@ -14,6 +14,7 @@ public class Coordinador {
 	private Logica miLogica;
 	private VentanaRegistro miVentanaRegistro;
 	private VentanaTabla miVentanaTabla;
+	private VentanaAddProduct miVentanaAddProduct;
 	private VentanaConsultaIndividual miVentanaConsultaIndividual;
 	private UsuarioDao miUsuarioDao;
 
@@ -124,5 +125,13 @@ public class Coordinador {
 	public void mostrarVentanaTabla() {
 		miVentanaTabla.setPermissions();
 		miVentanaTabla.setVisible(true);
+	}
+
+	public void mostrarVentanaAddProduct() {
+		miVentanaAddProduct.setVisible(true);
+	}
+
+	public void setVentanaAddProduct(VentanaAddProduct miVentanaAddProduct) {
+		this.miVentanaAddProduct = miVentanaAddProduct;
 	}
 }

@@ -12,6 +12,7 @@ public class Aplicacion {
 		VentanaPrincipal miVentana=new VentanaPrincipal();
 		VentanaLogin miLogin=new VentanaLogin(miVentana, true);
 		VentanaTabla miVentanaTabla = new VentanaTabla(miVentana, true);
+		VentanaAddProduct miVentanaAddProduct = new VentanaAddProduct(miVentana, true);
 		Coordinador miCoordinador=new Coordinador();
 		Logica miLogica=new Logica();
 		VentanaRegistro miVentanaRegistro=new VentanaRegistro(miVentana, true);
@@ -27,6 +28,7 @@ public class Aplicacion {
 		miVentanaConsultaIndividual.setCoordinador(miCoordinador);
 		miVentanaTabla.setCoordinador(miCoordinador);
 		miUsuarioDao.setCoordinador(miCoordinador);
+		miVentanaAddProduct.setCoordinador(miCoordinador);
 
 		
 		//Relacionamos el Coordinador con las Clases
@@ -37,6 +39,7 @@ public class Aplicacion {
 		miCoordinador.setVentanaConsultaIndividual(miVentanaConsultaIndividual);
 		miCoordinador.setUsuarioDao(miUsuarioDao);
 		miCoordinador.setVentanaTabla(miVentanaTabla);
+		miCoordinador.setVentanaAddProduct(miVentanaAddProduct);
 
 		
 		miVentana.setVisible(true);

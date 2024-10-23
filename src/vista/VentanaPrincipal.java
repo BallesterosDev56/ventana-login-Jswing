@@ -16,6 +16,7 @@ import controlador.Coordinador;
 
 public class VentanaPrincipal extends JFrame implements ActionListener {
 	  private javax.swing.JButton botonConsultaIndividual;
+      private javax.swing.JButton botonAgregarProductos;
 	  private javax.swing.JButton botonRegistrar;
 	  private javax.swing.JButton botonConsultaTabla;
 	  private javax.swing.JLabel labelTitulo,labelInferior;
@@ -61,6 +62,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
         botonConsultaIndividual = new JButton("CONSULTA USUARIO INDIVIDUAL");
         botonRegistrar = new JButton("REGISTRAR");
         botonConsultaTabla = new JButton("TABLA DE USUARIOS");
+        botonAgregarProductos = new JButton("AGREGAR PRODUCTOS");
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -77,6 +79,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
         botonConsultaIndividual.setFont(new Font("Tahoma", Font.PLAIN, 24));
         botonRegistrar.setFont(new Font("Tahoma", Font.PLAIN, 24));
         botonConsultaTabla.setFont(new Font("Tahoma", Font.PLAIN, 24));
+        botonAgregarProductos.setFont(new Font("Tahoma", Font.PLAIN, 24));
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 0, 10, 0);
@@ -91,6 +94,9 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
 
         gbc.gridy = 2;
         miPanelPrincipal.add(botonConsultaTabla, gbc);
+
+        gbc.gridy = 3;
+        miPanelPrincipal.add(botonAgregarProductos, gbc);
 
         barraMenu = new JMenuBar();
         menu = new JMenu("Opciones");
@@ -111,6 +117,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
         botonRegistrar.addActionListener(this);
         itemOpciones.addActionListener(this);
         botonConsultaTabla.addActionListener(this);
+        botonAgregarProductos.addActionListener(this);
 
     }
 
@@ -149,6 +156,10 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
             miCoordinador.setUsuarioDocumento(usuarioDocumento);
             miCoordinador.setUsuarioTipo(tipoUsuario);
             miCoordinador.mostrarVentanaTabla();
+        }
+
+        if(e.getSource()==botonAgregarProductos) {
+            miCoordinador.mostrarVentanaAddProduct();
         }
 	}
 
