@@ -135,14 +135,20 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
             miCoordinador.setUsuarioTipo(tipoUsuario);
             miCoordinador.mostrarVentanaConsulta();
         } else if (source == botonConsultaTabla) {
+            miCoordinador.setUsuarioDocumento(usuarioDocumento);
+            miCoordinador.setUsuarioTipo(tipoUsuario);
             miCoordinador.mostrarVentanaTabla();
         } else if (source == botonAgregarProductos) {
             miCoordinador.mostrarVentanaAddProduct();
         } else if (source == botonTablaProductos) {
             miCoordinador.mostrarTablaProductos();
         } else if (source == botonCompra) {
+            miCoordinador.setUsuarioDocumento(usuarioDocumento);
+            miCoordinador.setUsuarioTipo(tipoUsuario);
             miCoordinador.mostrarVentanaCompra();
         } else if (source == botonConsultaCompras) {
+            miCoordinador.setUsuarioDocumento(usuarioDocumento);
+            miCoordinador.setUsuarioTipo(tipoUsuario);
             miCoordinador.mostrarVentanaConsultaCompra();
         }
     }
@@ -152,13 +158,12 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
     }
 
     public void asignarPrivilegios(ArrayList<String> usuario) {
-        this.usuarioDocumento = usuario.get(usuario.size() - 1);
-        labelTitulo.setText("Bienvenido : " + usuario.get(0));
+        this.usuarioDocumento = usuario.getLast();
+        labelTitulo.setText("Bienvenido : " + usuario.getFirst());
 
         if (usuario.get(0).equals("Administrador")) {
             botonRegistrar.setVisible(true);
             botonAgregarProductos.setVisible(true);
-            botonConsultaCompras.setVisible(true);
             botonConsultaCompras.setVisible(true);
             tipoUsuario = 1;
         } else if (usuario.get(0).equals("Usuario")) {
@@ -168,6 +173,7 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
             botonConsultaCompras.setVisible(false);
         } else if (usuario.get(0).equals("Secretaria")) {
             botonRegistrar.setVisible(true);
+            botonConsultaCompras.setVisible(true);
             botonAgregarProductos.setVisible(true);
             tipoUsuario = 3;
         }
