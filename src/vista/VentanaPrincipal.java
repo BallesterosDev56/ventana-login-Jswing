@@ -164,17 +164,14 @@ public class VentanaPrincipal extends JFrame implements ActionListener {
         if (usuario.get(0).equals("Administrador")) {
             botonRegistrar.setVisible(true);
             botonAgregarProductos.setVisible(true);
-            botonConsultaCompras.setVisible(true);
             tipoUsuario = 1;
         } else if (usuario.get(0).equals("Usuario")) {
             tipoUsuario = 2;
             botonRegistrar.setVisible(false);
             botonAgregarProductos.setVisible(false);
-            botonConsultaCompras.setVisible(false);
         } else if (usuario.get(0).equals("Secretaria")) {
             botonRegistrar.setVisible(true);
             botonConsultaCompras.setVisible(true);
-            botonAgregarProductos.setVisible(true);
             tipoUsuario = 3;
         }
     }
