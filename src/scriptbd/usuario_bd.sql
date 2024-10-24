@@ -17,22 +17,31 @@ CREATE TABLE IF NOT EXISTS `usuario` (
 CREATE TABLE IF NOT EXISTS `producto` (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
-    descripcion TEXT,
     precio DECIMAL(10,2) NOT NULL,
     categoria VARCHAR(50),
     stock INT NOT NULL DEFAULT 0
 );
 
+CREATE TABLE IF NOT EXISTS `compra` (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  documento_usuario VARCHAR(11) NOT NULL,
+  id_producto INT NOT NULL,
+  precio VARCHAR(10) NOT NULL,
+  FOREIGN KEY (documento_usuario) REFERENCES usuario(documento) ON DELETE CASCADE,
+  FOREIGN KEY (id_producto) REFERENCES producto(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 
 INSERT INTO `usuario` (`documento`, `nombre`, `profesion`, `edad`, `direccion`, `telefono`, `tipo`, `password`, estado)
 VALUES
-('1094044519', 'Administrador', '', 0, '', '', 1, '1234', 1),
-('22222', 'Ruth Ballesteros', 'La mejor madre', 47, 'la isabela', '3323', 2, 'ruka', 1),
-('33333', 'mariana', 'nose', 20, 'la isa', '1212', 3, 'mari', 1);
+('admin', 'Administrador', '', 0, '', '', 1, 'admin', 1),
+('22222', 'Ruth Ballesteros', 'La mejor madre', 47, 'la isabela', '3323', 1, 'ruka', 1),
+('usuario', 'usuario', 'nose', 20, 'la isa', '1212', 2, 'usuario', 1),
+('secretaria', 'secretaria', 'nose', 20, 'la isa', '1212', 3, 'secretaria', 1);
 
-INSERT INTO productos (nombre, descripcion, precio, categoria, stock) VALUES
-('Camiseta Deportiva', 'Camiseta para actividades físicas', 19.99, 'Ropa', 50),
-('Zapatillas Running', 'Zapatillas para correr de alto rendimiento', 79.99, 'Calzado', 30),
-('Bicicleta de Montaña', 'Bicicleta con suspensión delantera', 499.99, 'Deportes', 10),
-('Auriculares Inalámbricos', 'Auriculares Bluetooth con cancelación de ruido', 59.99, 'Tecnología', 25),
-('Smartwatch', 'Reloj inteligente con monitoreo de salud', 149.99, 'Tecnología', 15);
+INSERT INTO producto (nombre, precio, categoria, stock) VALUES
+('Camiseta Deportiva', 19.99, 'Ropa', 50),
+('Zapatillas Running', 79.99, 'Calzado', 30),
+('Bicicleta de Montaña', 499.99, 'Deportes', 10),
+('Auriculares Inalámbricos', 59.99, 'Tecnología', 25),
+('Smartwatch', 149.99, 'Tecnología', 15);

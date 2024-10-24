@@ -293,7 +293,7 @@ public class VentanaConsultaIndividual extends JDialog implements ActionListener
         String res = "";
         String documento = campoDocumento.getText();
 
-        if(usuarioTipo == 2 || usuarioTipo == 3) {
+        if(usuarioTipo == 2) {
 
             if (verifySameDocument(campoDocumento.getText(), usuarioDocumento)) {
                 res = miCoordinador.eliminarUsuario(documento);
@@ -301,7 +301,10 @@ public class VentanaConsultaIndividual extends JDialog implements ActionListener
                 JOptionPane.showMessageDialog(null, "Solo puedes eliminar tu propio perfil", "Error de permisos", JOptionPane.WARNING_MESSAGE);
                 return;
             }
-        } else {
+        } else if(usuarioTipo == 3) {
+            btonEliminar.setVisible(false);
+            btonActualizar.setVisible(false);
+        }else {
             res = miCoordinador.eliminarUsuario(documento);
         }
         if ((!Objects.equals(res, "error"))) {

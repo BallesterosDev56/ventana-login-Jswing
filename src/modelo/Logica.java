@@ -2,6 +2,7 @@ package modelo;
 
 import javax.swing.JOptionPane;
 
+import modelo.vo.ProductoVo;
 import modelo.vo.UsuarioVo;
 import controlador.Coordinador;
 
@@ -101,6 +102,29 @@ public class Logica {
 			return edad;
 		}
 
+	public String validarProducto(ProductoVo producto) {
+		String name = producto.getNombre().trim();
+		double precio = producto.getPrecio();
+		int stock = producto.getStock();
+
+		// Validación del nombre
+		if (name.isEmpty()) {
+			return "El nombre del producto es obligatorio.";
+		}
+
+		// Validación del precio
+		if (precio < 0) {
+			return "El precio no puede ser negativo.";
+		}
+
+		// Validación del stock
+		if (stock < 0) {
+			return "El stock no puede ser negativo.";
+		}
+
+		// Producto válido
+		return "ok";
+	}
 
 
 }
